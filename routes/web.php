@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('admin.index');
 });
+
+Route::prefix('schedule')->group(function () {
+    Route::get('list-schedule', [\App\Http\Controllers\ScheduleController::class, 'index'])->name('list_schedule');
+});

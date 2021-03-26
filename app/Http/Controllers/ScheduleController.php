@@ -7,6 +7,16 @@ use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
 {
+    public function search(Request $request)
+    {
+        $search1 = $request->search1;
+        $search2 = $request->search2;
+        $schedules = Schedule::where('date', $request->search1)
+                            ->where('end_date', $request->search2)
+                            ->paginate(14);
+        return view("admin.schedule.list", compact('schedules'));
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +24,8 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        //
+        $schedules = Schedule::paginate(14);
+        return view('admin.schedules.list', compact('schedules'));
     }
 
     /**
