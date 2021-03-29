@@ -41,22 +41,13 @@
             </div>
             <div class="col-md-6 col-lg-3">
                 <div class="widget-content">
-                    {{--                <p>Status:</p>--}}
-                    {{--                <select name="search3">--}}
-                    {{--                        <option value="0">invalid</option>--}}
-                    {{--                        <option value="1">In force</option>--}}
-                    {{--                </select>--}}
+                    <br>
                     <br>
                     <button type="submit"
-                            style="background: black!important;color: white!important;font-size: 16px!important; padding: 6px">
+                            style="background: black!important;color: white!important;">
                         Search
                     </button>
                 </div>
-            </div>
-            {{--        <div class="col-md-6 col-lg-3">--}}
-            <div class="widget-content">
-
-                {{--            </div>--}}
             </div>
         </div>
     </form>
@@ -79,7 +70,7 @@
                         <th>Start date</th>
                         <th>End date</th>
                         <th>Status</th>
-                        <th>Delete</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -95,52 +86,21 @@
                                 <td>in force</td>
                             @endif
                             <td>
-                                <a href="{{route('delete_schedule', $val->id)}}"
-                                   onclick="return confirm('Are you sure you want to delete the schedule with an id equal to {{$val->id}}?')"><i style="font-size: 20px!important; color: red!important;" class="pe-7s-close-circle"> </i>
+                                <a href="{{route('edit_schedule',$val->id)}}"><i style="font-size: 20px!important; color: deepskyblue!important;" class="pe-7s-crop"> </i></i>
                                 </a>
+                                <a href="{{route('delete_schedule', $val->id)}}"
+                                   onclick="return confirm('Are you sure you want to delete the schedule with an id equal to {{$val->id}}?')">
+                                    <i style="font-size: 20px!important; color: red!important;" class="pe-7s-close-circle"> </i>
+                                </a>
+
                             </td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
+                <div style="float: right;">{{ $schedules->links( "pagination::bootstrap-4") }}</div>
             </div>
         </div>
     </div>
-    {{--    <div class="col-lg-6">--}}
-    {{--        <div class="main-card mb-3 card">--}}
-    {{--            <div class="card-body"><h5 class="card-title">Simple table</h5>--}}
-    {{--                <table class="mb-0 table">--}}
-    {{--                    <thead>--}}
-    {{--                    <tr>--}}
-    {{--                        <th>#</th>--}}
-    {{--                        <th>First Name</th>--}}
-    {{--                        <th>Last Name</th>--}}
-    {{--                        <th>Username</th>--}}
-    {{--                    </tr>--}}
-    {{--                    </thead>--}}
-    {{--                    <tbody>--}}
-    {{--                    <tr>--}}
-    {{--                        <th scope="row">1</th>--}}
-    {{--                        <td>Mark</td>--}}
-    {{--                        <td>Otto</td>--}}
-    {{--                        <td>@mdo</td>--}}
-    {{--                    </tr>--}}
-    {{--                    <tr>--}}
-    {{--                        <th scope="row">2</th>--}}
-    {{--                        <td>Jacob</td>--}}
-    {{--                        <td>Thornton</td>--}}
-    {{--                        <td>@fat</td>--}}
-    {{--                    </tr>--}}
-    {{--                    <tr>--}}
-    {{--                        <th scope="row">3</th>--}}
-    {{--                        <td>Larry</td>--}}
-    {{--                        <td>the Bird</td>--}}
-    {{--                        <td>@twitter</td>--}}
-    {{--                    </tr>--}}
-    {{--                    </tbody>--}}
-    {{--                </table>--}}
-    {{--            </div>--}}
-    {{--        </div>--}}
-    {{--    </div>--}}
     @yield('create_schedule')
 @endsection

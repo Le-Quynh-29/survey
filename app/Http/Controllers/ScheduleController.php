@@ -17,7 +17,7 @@ class ScheduleController extends Controller
         $schedules = DB::table('schedules')->where('date', $search1)
                             ->where('end_date', $search2)
 //                            ->orWhere('status',$request->search3)
-                            ->paginate(14);
+                            ->paginate(9);
         return view("admin.schedules.list", compact('schedules'));
     }
 
@@ -28,7 +28,7 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        $schedules = Schedule::paginate(14);
+        $schedules = Schedule::paginate(9);
         return view('admin.schedules.list', compact('schedules'));
     }
 
@@ -39,7 +39,7 @@ class ScheduleController extends Controller
      */
     public function create()
     {
-        $schedules = Schedule::paginate(14);
+        $schedules = Schedule::paginate(9);
         return view('admin.schedules.create', compact('schedules'));
     }
 
@@ -55,6 +55,7 @@ class ScheduleController extends Controller
         $schedules->fill($request->all());
         $schedules->token = Str::random(10);
         $schedules->save();
+        session()->flash('success','Create successfully');
         return redirect()->route('create_schedule');
     }
 
@@ -75,9 +76,10 @@ class ScheduleController extends Controller
      * @param  \App\Models\Schedule  $schedule
      * @return \Illuminate\Http\Response
      */
-    public function edit(Schedule $schedule)
+    public function edit($id)
     {
-        //
+        $schedule = Schedule::findOrFail($id);
+        return view('admin.schedules.edit', compact('schedule'));
     }
 
     /**
@@ -87,9 +89,12 @@ class ScheduleController extends Controller
      * @param  \App\Models\Schedule  $schedule
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Schedule $schedule)
+    public function update(Request $request,$id)
     {
-        //
+        $schedule = Schedule::findOrfail($id);
+        $schedule->fill($request->all());
+        $schedule->save();
+        return redirect()->route('create_schedule');
     }
 
     /**
