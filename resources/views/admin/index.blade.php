@@ -573,7 +573,7 @@
 {{--                            </ul>--}}
                         </li>
                         <li>
-                            <a href="{{route('list_schedule')}}">
+                            <a href="{{route('create_schedule')}}">
                                 <i class="metismenu-icon pe-7s-display2"></i>
                                 Schedules
                             </a>

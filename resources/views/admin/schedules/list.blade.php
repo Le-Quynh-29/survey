@@ -7,7 +7,7 @@
                     <i class="metismenu-icon pe-7s-display2">
                     </i>
                 </div>
-                <div>Analytics Dashboard
+                <div>Schedule
                 </div>
             </div>
             <div class="page-title-actions">
@@ -22,40 +22,44 @@
 
 
 @section('search')
-    <div class="row">
-        <div class="col-md-6 col-lg-3">
+    <form method="post" action="{{route('search_schedule')}}">
+        {!! csrf_field() !!}
+        <div class="row">
+            <div class="col-md-6 col-lg-3">
+                <div class="widget-content">
+                    <p>Start date:</p>
+                    <input style="width: 370px!important;" name="search1" type="date" value="{{old('search1')}}"
+                           placeholder="start date">
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="widget-content">
+                    <p>End date:</p>
+                    <input style="width: 370px!important;" name="search2" type="date" value="{{old('search2')}}"
+                           placeholder="end date">
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="widget-content">
+                    {{--                <p>Status:</p>--}}
+                    {{--                <select name="search3">--}}
+                    {{--                        <option value="0">invalid</option>--}}
+                    {{--                        <option value="1">In force</option>--}}
+                    {{--                </select>--}}
+                    <br>
+                    <button type="submit"
+                            style="background: black!important;color: white!important;font-size: 16px!important; padding: 6px">
+                        Search
+                    </button>
+                </div>
+            </div>
+            {{--        <div class="col-md-6 col-lg-3">--}}
             <div class="widget-content">
-                <p>Start date:</p>
-                <input style="width: 370px!important;" type="date">
+
+                {{--            </div>--}}
             </div>
         </div>
-        <div class="col-md-6 col-lg-3">
-            <div class="widget-content">
-                <p>End date:</p>
-                <input style="width: 370px!important;" type="date">
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-            <div class="widget-content">
-                <p>Status:</p>
-                <select>
-                    @foreach($schedules as $key => $val)
-                    @if($val->status == 0)
-                        <option value="0">invalid</option>
-                    @else
-                        <option value="1">In force</option>
-                        @endif
-                    @endforeach
-                </select>
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-            <div class="widget-content">
-                <br>
-                <button type="submit" style="background: black!important;color: white!important;font-size: 16px!important; padding: 6px">Search</button>
-            </div>
-        </div>
-    </div>
+    </form>
 
 @endsection
 
@@ -63,45 +67,10 @@
 @section('list_detail')
 
 
+
     <div class="col-lg-6">
         <div class="main-card mb-3 card">
-            <div class="card-body"><h5 class="card-title">Simple table</h5>
-                <table class="mb-0 table">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Username</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-6">
-        <div class="main-card mb-3 card">
-            <div class="card-body"><h5 class="card-title">Table bordered</h5>
+            <div class="card-body"><h5 class="card-title">List schedules</h5>
                 <table class="mb-0 table">
                     <thead>
                     <tr>
@@ -110,7 +79,7 @@
                         <th>Start date</th>
                         <th>End date</th>
                         <th>Status</th>
-                        <th></th>
+                        <th>Delete</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -123,9 +92,13 @@
                             @if($val->status === 0)
                                 <td>invalid</td>
                             @else
-                            <td>in force</td>
+                                <td>in force</td>
                             @endif
-                            <td></td>
+                            <td>
+                                <a href="{{route('delete_schedule', $val->id)}}"
+                                   onclick="return confirm('Are you sure you want to delete the schedule with an id equal to {{$val->id}}?')"><i style="font-size: 20px!important; color: red!important;" class="pe-7s-close-circle"> </i>
+                                </a>
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -133,4 +106,41 @@
             </div>
         </div>
     </div>
+    {{--    <div class="col-lg-6">--}}
+    {{--        <div class="main-card mb-3 card">--}}
+    {{--            <div class="card-body"><h5 class="card-title">Simple table</h5>--}}
+    {{--                <table class="mb-0 table">--}}
+    {{--                    <thead>--}}
+    {{--                    <tr>--}}
+    {{--                        <th>#</th>--}}
+    {{--                        <th>First Name</th>--}}
+    {{--                        <th>Last Name</th>--}}
+    {{--                        <th>Username</th>--}}
+    {{--                    </tr>--}}
+    {{--                    </thead>--}}
+    {{--                    <tbody>--}}
+    {{--                    <tr>--}}
+    {{--                        <th scope="row">1</th>--}}
+    {{--                        <td>Mark</td>--}}
+    {{--                        <td>Otto</td>--}}
+    {{--                        <td>@mdo</td>--}}
+    {{--                    </tr>--}}
+    {{--                    <tr>--}}
+    {{--                        <th scope="row">2</th>--}}
+    {{--                        <td>Jacob</td>--}}
+    {{--                        <td>Thornton</td>--}}
+    {{--                        <td>@fat</td>--}}
+    {{--                    </tr>--}}
+    {{--                    <tr>--}}
+    {{--                        <th scope="row">3</th>--}}
+    {{--                        <td>Larry</td>--}}
+    {{--                        <td>the Bird</td>--}}
+    {{--                        <td>@twitter</td>--}}
+    {{--                    </tr>--}}
+    {{--                    </tbody>--}}
+    {{--                </table>--}}
+    {{--            </div>--}}
+    {{--        </div>--}}
+    {{--    </div>--}}
+    @yield('create_schedule')
 @endsection
