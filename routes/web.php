@@ -19,4 +19,8 @@ Route::get('/', function () {
 
 Route::prefix('schedule')->group(function () {
     Route::get('list-schedule', [\App\Http\Controllers\ScheduleController::class, 'index'])->name('list_schedule');
+    Route::post('search',[\App\Http\Controllers\ScheduleController::class,'search'])->name('search_schedule');
+    Route::get('create-schedule',[\App\Http\Controllers\ScheduleController::class,'create'])->name('create_schedule');
+    Route::post('create-schedule',[\App\Http\Controllers\ScheduleController::class,'store'])->name('store_schedule');
+    Route::get('delete/{id}', [\App\Http\Controllers\ScheduleController::class,'destroy'])->name('delete_schedule');
 });

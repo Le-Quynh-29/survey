@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FormRequest_Schedules;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class ScheduleController extends Controller
 {
@@ -11,10 +14,11 @@ class ScheduleController extends Controller
     {
         $search1 = $request->search1;
         $search2 = $request->search2;
-        $schedules = Schedule::where('date', $request->search1)
-                            ->where('end_date', $request->search2)
+        $schedules = DB::table('schedules')->where('date', $search1)
+                            ->where('end_date', $search2)
+//                            ->orWhere('status',$request->search3)
                             ->paginate(14);
-        return view("admin.schedule.list", compact('schedules'));
+        return view("admin.schedules.list", compact('schedules'));
     }
 
     /**
@@ -35,7 +39,8 @@ class ScheduleController extends Controller
      */
     public function create()
     {
-        //
+        $schedules = Schedule::paginate(14);
+        return view('admin.schedules.create', compact('schedules'));
     }
 
     /**
@@ -44,9 +49,13 @@ class ScheduleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FormRequest_Schedules $request)
     {
-        //
+        $schedules = new Schedule();
+        $schedules->fill($request->all());
+        $schedules->token = Str::random(10);
+        $schedules->save();
+        return redirect()->route('create_schedule');
     }
 
     /**
@@ -89,8 +98,10 @@ class ScheduleController extends Controller
      * @param  \App\Models\Schedule  $schedule
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Schedule $schedule)
+    public function destroy($id)
     {
-        //
+        $schedules = Schedule::findOrFail($id);
+        $schedules->delete();
+        return redirect()->route('create_schedule');
     }
 }
