@@ -50,7 +50,6 @@ class CreateAnketsTable extends Migration
             $table->text('survey05_11_other');
             $table->text('survey05_12_occupation');
             $table->text('survey05_13_other');
-            $table->text('survey05_14_yes');
             $table->text('survey05_15_no');
             $table->text('survey_06');
             $table->text('survey06_2_event');
